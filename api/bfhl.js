@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.json());
 
-// Helper for alternating caps in reverse
+
 function alternatingCapsReverse(str) {
   let out = '', flip = true;
   for (let c of str.split('').reverse()) {
@@ -17,9 +17,9 @@ app.post('/bfhl', (req, res) => {
   try {
     const { data } = req.body;
 
-    // User details (customize for your submission)
-    const full_name = "himanshu";       // use lowercase, underscores if needed
-    const dob = "09102004";             // ddmmyyyy format
+  
+    const full_name = "himanshu";       
+    const dob = "09102004";          
     const email = "himanshu2022@vitbhopal.ac.in";
     const roll_number = "22BCE10118";
 
@@ -75,7 +75,7 @@ app.post('/bfhl', (req, res) => {
   }
 });
 
-// For local testing: only start server if not required as a module
+// For local testing
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
@@ -83,5 +83,6 @@ if (require.main === module) {
   });
 }
 
-// Always export the app for Vercel
+
 module.exports = app;
+
