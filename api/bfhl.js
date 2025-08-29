@@ -3,15 +3,25 @@ const app = express();
 
 app.use(express.json());
 
+// Helper for alternating caps in reverse
+function alternatingCapsReverse(str) {
+  let out = '', flip = true;
+  for (let c of str.split('').reverse()) {
+    out += flip ? c.toUpperCase() : c.toLowerCase();
+    flip = !flip;
+  }
+  return out;
+}
+
 app.post('/bfhl', (req, res) => {
   try {
     const { data } = req.body;
 
-    // User details (replace with your details)
-    const full_name = "Himanshu"; // enter your name in lowercase with underscores
-    const dob = "09102004"; // enter your date of birth in ddmmyyyy
-    const email = "himanshu2022@vitbhopal.ac.in"; // your email
-    const roll_number = "22BCE10118"; // your college roll number
+    // User details (customize for your submission)
+    const full_name = "himanshu";       // use lowercase, underscores if needed
+    const dob = "09102004";             // ddmmyyyy format
+    const email = "himanshu2022@vitbhopal.ac.in";
+    const roll_number = "22BCE10118";
 
     let odd_numbers = [];
     let even_numbers = [];
@@ -19,16 +29,6 @@ app.post('/bfhl', (req, res) => {
     let special_characters = [];
     let sum = 0;
     let alpha_concat = [];
-
-    // Helper for alternating caps
-    function alternatingCapsReverse(str) {
-      let out = "", flip = true;
-      for (let c of str.split('').reverse()) {
-        out += flip ? c.toUpperCase() : c.toLowerCase();
-        flip = !flip;
-      }
-      return out;
-    }
 
     for (let item of data) {
       if (/^\d+$/.test(item)) {
@@ -60,7 +60,7 @@ app.post('/bfhl', (req, res) => {
     res.status(200).json(response);
 
   } catch (error) {
-    return res.status(200).json({
+    res.status(200).json({
       is_success: false,
       user_id: "error_user",
       email: "",
@@ -75,4 +75,13 @@ app.post('/bfhl', (req, res) => {
   }
 });
 
+// For local testing: only start server if not required as a module
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`API running locally on http://localhost:${PORT}/bfhl`);
+  });
+}
+
+// Always export the app for Vercel
 module.exports = app;
